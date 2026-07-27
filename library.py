@@ -19,9 +19,20 @@ def read_valid_copies():
 
 # Adds a new book OR adds copies to an existing title by the same author
 def add_book(books):
-    pass
-
-
+    global next_book_number
+    title = input("Enter the book title: ")
+    author = input("Enter the author: ")
+    copies = int(input("Enter the number of copies: "))
+    book_id = "B" + str(next_book_number)
+    books[book_id] = {
+        "title": title,
+        "author": author,
+        "total": copies,
+        "available": copies,
+        "times_borrowed": 0
+    }
+    next_book_number = next_book_number + 1
+    print (books)
 # Registers a new member with an empty borrowed list
 def register_member(members):
     pass
@@ -70,8 +81,11 @@ while True:
     print("7. Library report")
     print("8. Exit")
     choice = input("\nChose an option(1-8): ")
-    if choice == "8":
+    if choice == "1":
+        add_book(books)
+    elif choice == "8":
         print("Goodbye!")
         break
-    print("Feature coming soon!")
+    else:
+        print("Feature coming soon!")
     
