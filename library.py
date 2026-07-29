@@ -2,15 +2,37 @@
 #Xayan Kyle Lovell
 #Python Essentials 1
 
-# Returns (total_copies, copies_available) across the whole library as a tuple
-def library_totals(books):
-    pass
-
+#Prints totals for books and members in the library
+def library_totals(books, members):
+    total_books = 0
+    available_books = 0
+    borrowed_books = 0
+    total_members = 0
+    for book_id in books:
+        book = books[book_id]
+        total_books = total_books + book["total"]
+        available_books = available_books + book["available"]
+        borrowed_books = borrowed_books + (book["total"] - book["available"])
+    for member_id in members:
+        total_members = total_members + 1
+    print("\n===== LIBRARY TOTALS =====")
+    print("Total books:", total_books)
+    print("Available books:", available_books)
+    print("Borrowed books:", borrowed_books)
+    print("Total members:", total_members)
+    
 
 # Returns the book ID of the most-borrowed book, or None if no books
 def most_borrowed(books):
-    pass
-
+    most_book_id = None
+    highest_count = -1
+    for book_id in books:
+        book = books[book_id]
+        if book["times_borrowed"] > highest_count:
+            highest_count = book["times_borrowed"]
+            most_book_id = book_id
+    return most_book_id
+    
 
 # Asks for a number of copies, validates with try-except, returns int or None
 def read_valid_copies():
@@ -31,7 +53,6 @@ def add_book(books):
     title = input("Enter the book title: ")
     author = input ("Enter the author: ")
     copies = read_valid_copies()
-
     #Searches for every existing book first
     for book_id in books:
         book = books[book_id]
@@ -41,7 +62,6 @@ def add_book(books):
                 book["available"] = book["available"] + copies
             print("Book already exist! Copies have been updated.")
             return
-
     #If we never found the book create a brand new one 
     book_id = "B" + str(next_book_number)
     books[book_id] = {
@@ -55,10 +75,21 @@ def add_book(books):
     print("New book added!")
     print(books)
 
-    
+
 # Registers a new member with an empty borrowed list
 def register_member(members):
     global next_member_number
+    name = input("Enter member name: ")
+    if name == "":
+        print("Member name cannot be blank.")
+        return
+    member_id = "M" + str(next_member_number)
+    members[member_id] = {
+    "name": name,
+    "borrowed": []
+    }
+    next_member_number = next_member_number + 1
+    print("Member " + member_id + " registered successfully!")
 
 
 # One member borrows one book - enforces ALL the rules, updates BOTH dicts
@@ -73,9 +104,21 @@ def return_book(books, members):
 
 # Case-insensitive keyword search over titles
 def search_catalogue(books):
-    pass
+    keyword = input("Enter a keyword: ").lower()
+    found = False
+    for book_id in books:
+        book = books[book_id]
+        if keyword in book["title"].lower():
+            print(book_id)
+            print("Title:", book["title"])
+            print("Author:", book["author"])
+            print("Available:", book["available"], "/", book["total"])
+            print()
+            found = True
+    if found == False:
+        print("No books found.")
 
-
+    
 # Prints one member with the TITLES of their borrowed books
 def member_summary(books, members):
     pass
@@ -106,6 +149,8 @@ while True:
     choice = input("\nChose an option(1-8): ")
     if choice == "1":
         add_book(books)
+    elif choice == "2":
+        register_member(members)
     elif choice == "8":
         print("Goodbye!")
         break
