@@ -169,8 +169,18 @@ def member_summary(books, members):
 
 # Prints the whole-library report
 def library_report(books, members):
-    pass
-
+total_books, available_books = libary_totals(books)
+print("===== Library Report =====")
+print("Books in catalogue:", len(books))
+print("Registered members:", len(members))
+print("Total copies:", total_books)
+print("Available copies:", available_books)
+print()
+print("Most borrowed book:")
+result = most_borrowed(books)
+if result is None:
+    print("No books have been borrowed yet.")
+    print("Borrowed", result["times_borrowed"], "times")
 
 # ---- Main Program ----
 
