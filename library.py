@@ -15,12 +15,7 @@ def library_totals(books, members):
         borrowed_books = borrowed_books + (book["total"] - book["available"])
     for member_id in members:
         total_members = total_members + 1
-    print("\n===== LIBRARY TOTALS =====")
-    print("Total books:", total_books)
-    print("Available books:", available_books)
-    print("Borrowed books:", borrowed_books)
-    print("Total members:", total_members)
-    
+    return total_books, available_books
 
 # Returns the book ID of the most-borrowed book, or None if no books
 def most_borrowed(books):
@@ -169,18 +164,21 @@ def member_summary(books, members):
 
 # Prints the whole-library report
 def library_report(books, members):
-total_books, available_books = libary_totals(books)
-print("===== Library Report =====")
-print("Books in catalogue:", len(books))
-print("Registered members:", len(members))
-print("Total copies:", total_books)
-print("Available copies:", available_books)
-print()
-print("Most borrowed book:")
-result = most_borrowed(books)
-if result is None:
-    print("No books have been borrowed yet.")
-    print("Borrowed", result["times_borrowed"], "times")
+    total_books, available_books = library_totals(books, members)
+    print("===== Library Report =====")
+    print("Books in catalogue:", len(books))
+    print("Registered members:", len(members))
+    print("Total copies:", total_books)
+    print("Available copies:", available_books)
+    print()
+    print("Most borrowed book:")
+    result = most_borrowed(books)
+    if result is None:
+        print("No books have been borrowed yet.")
+    else:
+        book = books[result]
+        print(book["title"])
+        print("Borrowed", result["times_borrowed"], "times")
 
 # ---- Main Program ----
 
@@ -212,9 +210,9 @@ while True:
         search_catalogue(books)
     elif choice == "6":
         member_summary(books, members)
+    elif choice == "7":
+        library_report(books, members)
     elif choice == "8":
         print("Goodbye!")
         break
-    else:
-        print("Feature coming soon!")
     
