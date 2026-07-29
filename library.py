@@ -151,7 +151,20 @@ def search_catalogue(books):
     
 # Prints one member with the TITLES of their borrowed books
 def member_summary(books, members):
-    pass
+    member_id = input("Enter member ID: ")
+    if member_id not in members:
+        print("No such member.")
+        return
+    member = members[member_id]
+    print("Member:", member["name"])
+    print("Books out:", len(member["borrowed"]), "of 3 allowed")
+    if len(member["borrowed"]) == 0:
+        print("(No books out)")
+        return
+    print("Borrowed books:")
+    for book_id in member["borrowed"]:
+        book = books[book_id]
+        print(" ", book["title"])
 
 
 # Prints the whole-library report
@@ -187,6 +200,8 @@ while True:
         return_book(books, members)
     elif choice == "5":
         search_catalogue(books)
+    elif choice == "6":
+        member_summary(books, members)
     elif choice == "8":
         print("Goodbye!")
         break
