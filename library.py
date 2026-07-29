@@ -94,7 +94,28 @@ def register_member(members):
 
 # One member borrows one book - enforces ALL the rules, updates BOTH dicts
 def borrow_book(books, members):
-    pass
+    member_id = input("Enter the member ID: ")
+    if member_id not in members:
+        print("No such member.")
+        return
+    book_id = input("Enter book ID: ")
+    if book_id not in books:
+        print("No such book.")
+        return
+    if len(members[member_id]["borrowed"]) >= 3:
+        print("Member has reached the borrowing limit.")
+        return
+    if book_id in members[member_id]["borrowed"]:
+        print("Member already has this book.")
+        return
+    if books[book_id]["available"] == 0:
+        print("No copies available.")
+        return
+    books[book_id]["available"] = books[book_id]["available"] - 1
+    members[member_id]["borrowed"].append(book_id)
+    books[book_id]["times_borrowed"] = books[book_id]["times borrowed"] + 1
+    print("Book borrowed successfully!")
+
 
 
 # One member returns one book - updates BOTH dicts
