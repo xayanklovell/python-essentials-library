@@ -113,7 +113,7 @@ def borrow_book(books, members):
         return
     books[book_id]["available"] = books[book_id]["available"] - 1
     members[member_id]["borrowed"].append(book_id)
-    books[book_id]["times_borrowed"] = books[book_id]["times borrowed"] + 1
+    books[book_id]["times_borrowed"] = books[book_id]["times_borrowed"] + 1
     print("Book borrowed successfully!")
 
 
@@ -172,6 +172,10 @@ while True:
         add_book(books)
     elif choice == "2":
         register_member(members)
+    elif choice == "3":
+        borrow_book(books, members)
+    elif choice == "5":
+        search_catalogue(books)
     elif choice == "8":
         print("Goodbye!")
         break
