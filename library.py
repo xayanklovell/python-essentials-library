@@ -178,7 +178,7 @@ def library_report(books, members):
     else:
         book = books[result]
         print(book["title"])
-        print("Borrowed", result["times_borrowed"], "times")
+        print("Borrowed", book["times_borrowed"], "times")
 
 # ---- Main Program ----
 
