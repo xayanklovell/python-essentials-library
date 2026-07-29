@@ -117,11 +117,20 @@ def borrow_book(books, members):
     print("Book borrowed successfully!")
 
 
-
 # One member returns one book - updates BOTH dicts
 def return_book(books, members):
-    pass
-
+    member_id = input("Enter the member ID: ")
+    if member_id not in members:
+        print("Member not found.")
+        return
+    book_id = input("Enter the book ID: ")
+    if book_id not in members[member_id]["borrowed"]:
+        print("Member does not have this book.")
+        return
+    members[member_id]["borrowed"].remove(book_id)
+    books[book_id]["available"] = books[book_id]["available"] + 1
+    print("Book returned successfully!")
+    
 
 # Case-insensitive keyword search over titles
 def search_catalogue(books):
@@ -174,6 +183,8 @@ while True:
         register_member(members)
     elif choice == "3":
         borrow_book(books, members)
+    elif choice == "4":
+        return_book(books, members)
     elif choice == "5":
         search_catalogue(books)
     elif choice == "8":
